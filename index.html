@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Querya 是你的 Daily Question Engine: 用结构化的高质量问题训练判断力、决策力与长期思考。" />
+  <title>Querya | Daily Question Engine</title>
+
+  <style>
+    :root{
+      --bg: #FFD400;         /* brutal yellow */
+      --ink:#0B0B0B;         /* almost-black */
+      --paper:#FFF6CC;       /* warm light */
+      --radius: 18px;
+      --border: 4px;
+      --shadow: 10px;
+      --max: 1040px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height:1.25;
+    }
+
+    a{ color:var(--ink); text-decoration:none; border-bottom:2px solid var(--ink); }
+    a:hover{ background:var(--ink); color:var(--bg); }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding:24px; }
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:16px 18px;
+      border:var(--border) solid var(--ink);
+      border-radius:var(--radius);
+      background:var(--paper);
+      box-shadow: var(--shadow) var(--shadow) 0 var(--ink);
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-weight:900; letter-spacing:-0.02em;
+      text-transform:uppercase;
+    }
+    .logo{
+      width:44px; height:44px;
+      border:var(--border) solid var(--ink);
+      border-radius:12px;
+      background:var(--bg);
+      display:grid; place-items:center;
+      box-shadow: 6px 6px 0 var(--ink);
+      flex:0 0 auto;
+    }
+    .logo svg{ width:28px; height:28px; }
+    .nav{
+      display:flex; gap:14px; flex-wrap:wrap;
+      font-weight:800;
+    }
+    .nav a{ border-bottom:0; padding:6px 10px; border:3px solid transparent; }
+    .nav a:hover{ border:3px solid var(--ink); }
+
+    .hero{
+      margin-top:22px;
+      border:var(--border) solid var(--ink);
+      border-radius:calc(var(--radius) + 6px);
+      background:var(--paper);
+      box-shadow: var(--shadow) var(--shadow) 0 var(--ink);
+      padding:26px;
+    }
+    .kicker{
+      font-weight:900;
+      display:inline-block;
+      border:3px solid var(--ink);
+      padding:6px 10px;
+      border-radius:999px;
+      background:var(--bg);
+    }
+    h1{
+      margin:16px 0 10px;
+      font-size: clamp(44px, 6vw, 78px);
+      line-height:0.95;
+      letter-spacing:-0.04em;
+      font-weight:950;
+      text-transform:uppercase;
+    }
+    .sub{
+      font-size: clamp(16px, 2.2vw, 22px);
+      font-weight:800;
+      max-width:70ch;
+    }
+
+    .ctaRow{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:14px 16px;
+      border:var(--border) solid var(--ink);
+      border-radius:16px;
+      font-weight:950;
+      background:var(--bg);
+      box-shadow: 7px 7px 0 var(--ink);
+      cursor:pointer;
+    }
+    .btn:hover{ transform: translate(-2px, -2px); box-shadow: 9px 9px 0 var(--ink); }
+    .btn.secondary{ background:var(--paper); }
+    .btn span{ font-size:14px; opacity:0.9; font-weight:900; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+    .card{
+      border:var(--border) solid var(--ink);
+      border-radius:var(--radius);
+      background:var(--paper);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding:18px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      font-weight:950;
+      letter-spacing:-0.02em;
+      text-transform:uppercase;
+    }
+    .card p{
+      margin:0;
+      font-weight:800;
+      line-height:1.35;
+    }
+    .small{ font-size:14px; font-weight:850; opacity:0.9; }
+
+    .span-6{ grid-column: span 6; }
+    .span-4{ grid-column: span 4; }
+    .span-8{ grid-column: span 8; }
+    .span-12{ grid-column: span 12; }
+
+    .divider{
+      margin:24px 0;
+      height:6px;
+      border:var(--border) solid var(--ink);
+      border-radius:999px;
+      background:var(--bg);
+      box-shadow: 6px 6px 0 var(--ink);
+    }
+
+    .sample{
+      background: var(--bg);
+      border:3px solid var(--ink);
+      border-radius:16px;
+      padding:12px;
+      margin-top:12px;
+      font-weight:900;
+    }
+    .q{
+      border:3px solid var(--ink);
+      border-radius:14px;
+      padding:12px;
+      background:var(--paper);
+      margin:10px 0 0;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+    .qTitle{
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:-0.02em;
+      margin-bottom:6px;
+    }
+    .qBody{ font-weight:850; line-height:1.35; }
+
+    footer{
+      margin:26px 0 10px;
+      border:var(--border) solid var(--ink);
+      border-radius:var(--radius);
+      background:var(--paper);
+      box-shadow: 8px 8px 0 var(--ink);
+      padding:18px;
+      display:flex; flex-wrap:wrap; gap:14px; justify-content:space-between; align-items:center;
+      font-weight:850;
+    }
+    .links{ display:flex; gap:12px; flex-wrap:wrap; }
+
+    @media (max-width: 900px){
+      .span-6,.span-8,.span-4{ grid-column: span 12; }
+      .topbar{ flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- 简单 Q 箭头符号 (可替换为你的 app logo) -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 6h10v10H7z" stroke="#0B0B0B" stroke-width="2.5"/>
+            <path d="M10 10h7v7" stroke="#0B0B0B" stroke-width="2.5"/>
+            <path d="M10 17l7-7" stroke="#0B0B0B" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:18px;">QUERYA</div>
+          <div class="small">Daily Question Engine</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="site">
+        <a href="#product">产品</a>
+        <a href="#how">形式</a>
+        <a href="#who">适合谁</a>
+        <a href="#sample">示例</a>
+        <a href="#legal">条款</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <span class="kicker">ASK BETTER. THINK DEEPER.</span>
+      <h1>QUERYA</h1>
+      <p class="sub">
+        Querya 不是 “AI 给答案”。它是你的 <b>Question OS</b>。
+        每天投递一组结构化的高质量问题，让你的判断力、决策力、长期思考能力持续复利。
+      </p>
+
+      <div class="ctaRow">
+        <!-- 你可以把这里换成 App Store / TestFlight / 等候名单 -->
+        <a class="btn" href="#product">了解产品 <span>→</span></a>
+        <a class="btn secondary" href="mailto:hello@querya.cn">联系我 <span>hello@querya.cn</span></a>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section id="product" class="grid" aria-label="product">
+      <div class="card span-8">
+        <h3>What Querya is</h3>
+        <p>
+          一个把「哲学训练 + 咨询方法论 + 认知科学」产品化的系统。
+          你不需要先想好问题，Querya 会把关键问题投递到你面前，让你对齐目标、暴露盲区、迭代策略。
+        </p>
+        <div class="sample">
+          核心信念：当答案越来越廉价，真正稀缺的是“提出好问题的能力”。🧠
+        </div>
+      </div>
+
+      <div class="card span-4">
+        <h3>核心价值</h3>
+        <p>
+          1) 降低认知盲区<br/>
+          2) 强化决策质量<br/>
+          3) 让长期目标进入日常节奏<br/>
+          4) 形成可回看的思考资产
+        </p>
+      </div>
+
+      <div class="card span-6">
+        <h3>不是笔记</h3>
+        <p>笔记记录你已有的想法。Querya 生成你本来想不到、但又关键的问题。</p>
+      </div>
+
+      <div class="card span-6">
+        <h3>不是 Chatbot</h3>
+        <p>Chatbot 等你来问。Querya 主动推送问题，让你“先问对，再求解”。</p>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section id="how" class="grid" aria-label="how">
+      <div class="card span-12">
+        <h3>主要形式</h3>
+        <p>
+          Querya 的默认形态是 <b>Daily 6</b>：每天 6 个问题，固定结构，跨学科分布。
+          你可以把它当成一种“认知训练的日课”，每天 10 分钟，也能让思考方向不跑偏。
+        </p>
+      </div>
+
+      <div class="card span-4">
+        <h3>Topics</h3>
+        <p>
+          AI / Frontier Tech<br/>
+          Business / Strategy<br/>
+          Social Skills<br/>
+          Liberal Arts<br/>
+          Communication<br/>
+          Meta-thinking
+        </p>
+      </div>
+
+      <div class="card span-8">
+        <h3>交互方式</h3>
+        <p>
+          每个问题都可以收藏、记录你的回应、回看历史轨迹。
+          长期下来，你会得到一份个人化的 “Decision Journal + Thinking Graph”。
+        </p>
+        <p class="small" style="margin-top:10px;">
+          后续可拓展：主题路径、难度梯度、阶段性总结、个人画像驱动的 question crafting。
+        </p>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section id="who" class="grid" aria-label="who">
+      <div class="card span-6">
+        <h3>适合谁</h3>
+        <p>
+          创业者、产品经理、投资人、研究者、创作者。
+          以及任何在 “信息很多但方向不稳” 的人。
+        </p>
+      </div>
+      <div class="card span-6">
+        <h3>不适合谁</h3>
+        <p>
+          只想要现成答案、只想被动刷内容的人。
+          Querya 需要你对自己的思考负责。🟨⬛️
+        </p>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section id="sample" class="grid" aria-label="sample">
+      <div class="card span-12">
+        <h3>问题示例</h3>
+
+        <div class="q">
+          <div class="qTitle">Business</div>
+          <div class="qBody">如果我把当前产品的“核心承诺”写成一句话，它到底是效率工具、身份符号，还是一种日常仪式？这个承诺有没有可验证的 KPI？</div>
+        </div>
+
+        <div class="q">
+          <div class="qTitle">Meta-thinking</div>
+          <div class="qBody">我最近一次做出的重要决策，背后的默认假设是什么？如果这个假设反过来成立，我会采取哪条完全不同的策略？</div>
+        </div>
+
+        <div class="q">
+          <div class="qTitle">Social</div>
+          <div class="qBody">我和关键合作者之间的“隐性契约”是什么？它是基于利益、信任、还是共同叙事？我现在是否在无意中破坏它？</div>
+        </div>
+
+        <p class="small" style="margin-top:12px;">
+          说明：示例仅用于展示风格，你可以替换为你 App 内真实的 Daily 6。 
+        </p>
+      </div>
+    </section>
+
+    <div class="divider" role="separator" aria-hidden="true"></div>
+
+    <section id="legal" class="grid" aria-label="legal">
+      <div class="card span-12">
+        <h3>Legal</h3>
+        <p>
+          <a href="./terms.html">用户条款</a> /
+          <a href="./privacy.html">隐私政策</a> /
+          <a href="./ai-content.html">AI 生成内容声明</a>
+        </p>
+        <p class="small" style="margin-top:10px;">
+          © <span id="y"></span> Querya. All rights reserved.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>QUERYA.CN</div>
+      <div class="links">
+        <a href="mailto:hello@querya.cn">hello@querya.cn</a>
+        <a href="./terms.html">Terms</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="./ai-content.html">AI Content</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
