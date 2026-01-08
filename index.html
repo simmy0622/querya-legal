@@ -3,59 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Querya 是你的 Daily Question Engine：每天一组结构化高质量问题，训练判断力、决策力与长期思考。" />
-  <title>Querya | Daily Question Engine</title>
+  <meta name="description" content="Querya 是你的 Daily Question Engine：每天一组结构化高质量问题，让判断力与长期思考进入日常节奏。" />
+  <title>Querya — Daily Question Engine</title>
 
   <style>
     :root{
-      --bg: #FFD400;        /* yellow background */
-      --ink: #0B0B0B;       /* bold black */
-      --card: rgba(255,255,255,0.72);
-      --card2: rgba(255,255,255,0.55);
-      --stroke: rgba(11,11,11,0.12);
-      --stroke2: rgba(11,11,11,0.18);
-      --radius: 18px;
-      --max: 1100px;
+      --bg:#FFD400;
+      --ink:#0B0B0B;
+      --muted:rgba(11,11,11,.72);
+      --line:rgba(11,11,11,.18);
+      --card:rgba(255,255,255,.55);
+      --card2:rgba(255,255,255,.35);
+      --radius:16px;
+      --max:900px;
     }
 
     *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
-      background: var(--bg);
-      color: var(--ink);
+      background:var(--bg);
+      color:var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", Arial, sans-serif;
-      font-weight: 800; /* 黑色加粗 */
-      line-height: 1.35;
-      letter-spacing: -0.01em;
+      font-weight:900; /* 黑色加粗 */
+      letter-spacing:-0.01em;
+      line-height:1.35;
     }
 
-    a{
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 900;
-    }
-    a:hover{ text-decoration: underline; text-decoration-thickness: 2px; }
+    a{ color:var(--ink); text-decoration:none; }
+    a:hover{ text-decoration:underline; text-decoration-thickness:2px; }
 
-    .container{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 28px 18px 64px;
+    .wrap{ max-width:var(--max); margin:0 auto; padding:26px 18px 72px; }
+
+    /* 顶部：极简、像宣言页 */
+    .top{
+      position:sticky;
+      top:0;
+      z-index:20;
+      padding:14px 0;
+      background:linear-gradient(to bottom, rgba(255,212,0,.92), rgba(255,212,0,.72), rgba(255,212,0,0));
+      backdrop-filter: blur(10px);
     }
 
-    /* Top nav */
     .nav{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
-      position: sticky;
-      top: 0;
-      padding: 14px 0;
-      backdrop-filter: blur(10px);
-      background: rgba(255,212,0,0.82);
-      z-index: 50;
+      gap:14px;
     }
+
     .brand{
       display:flex;
       align-items:center;
@@ -65,512 +61,487 @@
     .mark{
       width:40px;
       height:40px;
-      border-radius: 12px;
-      background: var(--ink);
+      border-radius:12px;
+      background:var(--ink);
       display:grid;
       place-items:center;
     }
     .mark svg{ width:22px; height:22px; }
-    .brandTitle{
+    .brandText{
       display:flex;
       flex-direction:column;
       gap:2px;
       line-height:1.1;
     }
-    .brandTitle b{
-      font-weight: 950;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      font-size: 16px;
+    .brandText b{
+      font-weight:1000;
+      text-transform:uppercase;
+      letter-spacing:-0.04em;
+      font-size:16px;
     }
-    .brandTitle span{
-      font-size: 12px;
-      opacity: 0.85;
-      font-weight: 900;
-    }
-    .navLinks{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .navLinks a{
-      opacity: 0.92;
+    .brandText span{
+      font-size:12px;
+      opacity:.82;
+      font-weight:950;
     }
 
-    /* Hero */
-    .hero{
-      padding: 44px 0 26px;
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 28px;
-      align-items: start;
+    .links{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      font-weight:950;
     }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(11,11,11,0.08);
-      border: 1px solid var(--stroke2);
-      font-weight: 950;
-      font-size: 13px;
-    }
-    .badge .dot{
-      width:8px;
-      height:8px;
+    .links a{
+      opacity:.9;
+      padding:6px 10px;
       border-radius:999px;
-      background: var(--ink);
-      opacity:0.95;
+      background:transparent;
+      border:1px solid transparent;
+    }
+    .links a:hover{
+      border-color:var(--line);
+      text-decoration:none;
+    }
+
+    /* 版式：大标题 + 断句 */
+    .kicker{
+      margin-top:14px;
+      display:block;
+      text-transform:uppercase;
+      font-size:12px;
+      letter-spacing:.08em;
+      color:var(--muted);
+      font-weight:1000;
     }
 
     h1{
-      margin: 14px 0 10px;
-      font-size: clamp(40px, 5.4vw, 68px);
-      line-height: 1.02;
-      letter-spacing: -0.05em;
-      font-weight: 1000;
-      text-transform: uppercase;
+      margin:14px 0 10px;
+      font-size:clamp(44px, 6vw, 76px);
+      line-height:1.02;
+      letter-spacing:-0.06em;
+      font-weight:1100;
+      text-transform:uppercase;
     }
-    .subtitle{
-      font-size: clamp(16px, 2vw, 20px);
-      opacity: 0.95;
-      max-width: 62ch;
-      margin: 0 0 18px;
-      font-weight: 900;
+
+    .lead{
+      font-size:clamp(18px, 2.2vw, 22px);
+      max-width:64ch;
+      margin:0 0 18px;
     }
+
+    .stack p{
+      margin:6px 0;
+      font-size:clamp(18px, 2.1vw, 22px);
+    }
+    .stack .muted{ color:var(--muted); }
 
     .ctaRow{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
-      margin-top: 16px;
+      margin:18px 0 0;
     }
     .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding: 13px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--stroke2);
-      background: var(--ink);
-      color: var(--bg);
-      font-weight: 1000;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid rgba(11,11,11,.22);
+      font-weight:1000;
       cursor:pointer;
-      transition: transform .12s ease, opacity .12s ease;
     }
-    .btn:hover{ transform: translateY(-1px); opacity: 0.96; }
-    .btn.secondary{
-      background: rgba(255,255,255,0.55);
-      color: var(--ink);
-      border: 1px solid var(--stroke2);
+    .btn.primary{
+      background:var(--ink);
+      color:var(--bg);
+      border-color:var(--ink);
+    }
+    .btn.ghost{
+      background:rgba(255,255,255,.35);
+      color:var(--ink);
+    }
+    .btn:hover{ transform: translateY(-1px); }
+
+    .hr{
+      margin:28px 0;
+      height:1px;
+      background:var(--line);
     }
 
-    .heroCard{
-      border-radius: var(--radius);
-      background: rgba(255,255,255,0.55);
-      border: 1px solid var(--stroke2);
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-      min-height: 210px;
-    }
-    .heroCard:before{
-      content:"";
-      position:absolute;
-      inset:-80px -80px auto auto;
-      width: 220px;
-      height: 220px;
-      background: rgba(11,11,11,0.08);
-      border-radius: 999px;
-      filter: blur(0px);
-      transform: rotate(20deg);
-    }
-    .heroCard h3{
-      margin:0 0 10px;
-      font-size: 14px;
-      font-weight: 1000;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      opacity: 0.9;
-    }
-    .heroCard p{
-      margin: 0;
-      font-weight: 950;
-      font-size: 14px;
-      opacity: 0.92;
-    }
-    .metric{
+    /* 箭头流程（Mailya 风格核心之一） */
+    .flow{
+      margin-top:14px;
       display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 12px;
-      margin-top: 14px;
-      position: relative;
-      z-index: 1;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap:10px;
+      align-items:center;
     }
-    .metric .m{
-      background: rgba(255,255,255,0.55);
-      border: 1px solid var(--stroke);
-      border-radius: 14px;
-      padding: 12px;
-    }
-    .metric .m b{
-      display:block;
-      font-size: 18px;
-      font-weight: 1000;
-      letter-spacing: -0.03em;
-    }
-    .metric .m span{
-      font-size: 12px;
-      opacity: 0.85;
-      font-weight: 950;
-      text-transform: uppercase;
-    }
-
-    /* Sections */
-    .section{
-      padding: 34px 0;
-      border-top: 1px solid rgba(11,11,11,0.15);
-    }
-    .sectionHead{
+    .flow .box{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      min-height:70px;
       display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap: 14px;
-      flex-wrap:wrap;
-      margin-bottom: 18px;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-weight:1000;
     }
-    .sectionHead h2{
-      margin:0;
-      font-size: clamp(22px, 3vw, 32px);
-      letter-spacing: -0.04em;
-      font-weight: 1000;
-      text-transform: uppercase;
+    .flow .arrow{
+      font-size:22px;
+      opacity:.9;
+      padding:0 4px;
+      user-select:none;
     }
-    .sectionHead p{
-      margin:0;
-      max-width: 60ch;
-      opacity: 0.9;
-      font-weight: 900;
+    @media (max-width: 760px){
+      .flow{
+        grid-template-columns: 1fr;
+      }
+      .flow .arrow{ display:none; }
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, minmax(0,1fr));
-      gap: 14px;
+    /* 标题 */
+    h2{
+      margin:0 0 8px;
+      font-size:clamp(22px, 3.2vw, 34px);
+      letter-spacing:-0.04em;
+      text-transform:uppercase;
+      font-weight:1100;
     }
-    .card{
-      grid-column: span 4;
-      border-radius: var(--radius);
-      background: var(--card);
-      border: 1px solid var(--stroke2);
-      padding: 18px;
-      transition: transform .14s ease, background .14s ease;
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,0.82);
-    }
-    .card h4{
-      margin: 0 0 10px;
-      font-size: 14px;
-      text-transform: uppercase;
-      font-weight: 1000;
-      letter-spacing: -0.02em;
-    }
-    .card p{
+    .sub{
       margin:0;
-      opacity: 0.92;
-      font-weight: 900;
-      font-size: 14px;
+      color:var(--muted);
+      max-width:70ch;
+      font-weight:950;
     }
 
-    .split{
+    /* 对比表（简洁，不走 SaaS 卡片海） */
+    .compare{
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(255,255,255,.28);
+    }
+    .compare .row{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap:0;
+      border-top:1px solid var(--line);
     }
-    .panel{
-      border-radius: var(--radius);
-      background: var(--card2);
-      border: 1px solid var(--stroke2);
-      padding: 18px;
+    .compare .row:first-child{ border-top:0; }
+    .compare .cell{
+      padding:14px;
+      border-right:1px solid var(--line);
+      font-weight:1000;
     }
-    .panel h4{
+    .compare .cell:last-child{ border-right:0; }
+    .compare .head{
+      background:rgba(255,255,255,.42);
+      text-transform:uppercase;
+      letter-spacing:-0.02em;
+    }
+    .compare .muted{ color:var(--muted); font-weight:950; }
+
+    @media (max-width: 760px){
+      .compare .row{ grid-template-columns: 1fr; }
+      .compare .cell{ border-right:0; border-top:1px solid var(--line); }
+      .compare .row:first-child .cell{ border-top:0; }
+    }
+
+    /* 列表块 */
+    .list{
+      margin-top:14px;
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 14px 10px;
+    }
+    .list h3{
       margin:0 0 10px;
-      font-size: 14px;
-      text-transform: uppercase;
-      font-weight: 1000;
-      letter-spacing: -0.02em;
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:var(--muted);
+      font-weight:1100;
     }
-    .panel ul{
-      margin: 0;
-      padding-left: 18px;
+    .list ul{
+      margin:0;
+      padding-left:18px;
     }
-    .panel li{
-      margin: 6px 0;
-      opacity: 0.93;
-      font-weight: 900;
-      font-size: 14px;
+    .list li{
+      margin:8px 0;
+      font-weight:1000;
     }
+    .list li span{ color:var(--muted); font-weight:950; }
 
-    /* Sample */
-    .sample{
+    /* 三步开始 */
+    .steps{
+      margin-top:14px;
       display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 10px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:12px;
     }
-    .q{
-      border-radius: 14px;
-      background: rgba(255,255,255,0.6);
-      border: 1px solid var(--stroke2);
-      padding: 14px;
+    .step{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      min-height:120px;
     }
-    .q b{
+    .step b{
       display:block;
-      text-transform: uppercase;
-      font-weight: 1000;
-      margin-bottom: 6px;
-      letter-spacing: -0.02em;
-      font-size: 13px;
-      opacity: 0.9;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:1100;
     }
-    .q span{
-      display:block;
-      font-weight: 950;
-      opacity: 0.95;
-      font-size: 14px;
+    .step .n{
+      font-size:26px;
+      font-weight:1200;
+      letter-spacing:-0.04em;
+      margin-bottom:6px;
+    }
+    @media (max-width: 760px){
+      .steps{ grid-template-columns: 1fr; }
     }
 
-    /* Footer */
+    /* 结尾宣言块 */
+    .final{
+      margin-top:18px;
+      padding:16px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.28);
+    }
+    .final p{
+      margin:6px 0;
+      font-size:clamp(18px, 2.1vw, 22px);
+      font-weight:1100;
+      letter-spacing:-0.02em;
+    }
+
     footer{
-      margin-top: 26px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(11,11,11,0.15);
+      margin-top:30px;
+      padding-top:18px;
+      border-top:1px solid var(--line);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 12px;
+      gap:12px;
       flex-wrap:wrap;
+      color:var(--muted);
+      font-weight:950;
+      font-size:13px;
     }
-    .footerLinks{
-      display:flex;
-      gap: 14px;
-      flex-wrap:wrap;
-      opacity: 0.95;
-    }
-    .tiny{
-      font-size: 12px;
-      font-weight: 950;
-      opacity: 0.85;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-    }
-
-    /* Motion */
-    .reveal{
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity .45s ease, transform .45s ease;
-    }
-    .reveal.show{
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 900px){
-      .hero{ grid-template-columns: 1fr; }
-      .grid .card{ grid-column: span 12; }
-      .split{ grid-template-columns: 1fr; }
-      .navLinks{ display:none; }
-    }
+    footer .footlinks{ display:flex; gap:12px; flex-wrap:wrap; }
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <div class="wrap">
 
-    <div class="nav">
-      <div class="brand">
-        <div class="mark" aria-hidden="true">
-          <!-- minimalist Q-arrow mark -->
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M7 7h10v10H7z" stroke="#FFD400" stroke-width="2.4"/>
-            <path d="M10 10h7v7" stroke="#FFD400" stroke-width="2.4"/>
-            <path d="M10 17l7-7" stroke="#FFD400" stroke-width="2.4"/>
-          </svg>
+    <div class="top">
+      <div class="nav">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M7 7h10v10H7z" stroke="#FFD400" stroke-width="2.4"/>
+              <path d="M10 10h7v7" stroke="#FFD400" stroke-width="2.4"/>
+              <path d="M10 17l7-7" stroke="#FFD400" stroke-width="2.4"/>
+            </svg>
+          </div>
+          <div class="brandText">
+            <b>Querya</b>
+            <span>Daily Question Engine</span>
+          </div>
         </div>
-        <div class="brandTitle">
-          <b>Querya</b>
-          <span>Daily Question Engine</span>
-        </div>
-      </div>
 
-      <div class="navLinks">
-        <a href="#product">产品</a>
-        <a href="#format">主要形式</a>
-        <a href="#sample">示例</a>
-        <a href="#legal">条款</a>
+        <div class="links" aria-label="site">
+          <a href="#manifesto">宣言</a>
+          <a href="#difference">为什么不是 Chatbot</a>
+          <a href="#do">它能做什么</a>
+          <a href="#start">三步开始</a>
+          <a href="#legal">Legal</a>
+        </div>
       </div>
     </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="reveal">
-        <div class="badge"><span class="dot"></span> ASK BETTER. THINK DEEPER.</div>
-        <h1>Daily Question Engine</h1>
-        <p class="subtitle">
-          Querya 每天给你一组结构化高质量问题，训练判断力、决策力与长期思考。
-          不是更快地给答案，而是更早地把关键问题摆到桌面上。
-        </p>
+    <!-- HERO / MANIFESTO -->
+    <section id="manifesto">
+      <span class="kicker">QUESTION ENGINE</span>
+      <h1>Querya</h1>
 
-        <div class="ctaRow">
-          <a class="btn" href="#product">了解产品 →</a>
-          <a class="btn secondary" href="mailto:hello@querya.cn">联系我</a>
-        </div>
+      <p class="lead">你的 Daily Question Engine。</p>
 
-        <p class="tiny" style="margin-top:12px;">
-          Built for founders, creators, thinkers.
-        </p>
+      <div class="stack">
+        <p>不是聊天。</p>
+        <p>不是陪你想。</p>
+        <p>是把关键问题 <b>投递</b> 给你，让你更早看清方向。</p>
+        <p class="muted">答案越来越便宜，稀缺的是“问对”。</p>
       </div>
 
-      <aside class="heroCard reveal" aria-label="quick facts">
-        <h3>Quick facts</h3>
-        <p>把“思考训练”变成可执行的日常机制。少走错路，持续复利。</p>
-
-        <div class="metric">
-          <div class="m">
-            <b>Daily 6</b>
-            <span>questions</span>
-          </div>
-          <div class="m">
-            <b>Socratic</b>
-            <span>structure</span>
-          </div>
-          <div class="m">
-            <b>Multi</b>
-            <span>disciplines</span>
-          </div>
-          <div class="m">
-            <b>Trackable</b>
-            <span>history</span>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- PRODUCT -->
-    <section class="section" id="product">
-      <div class="sectionHead reveal">
-        <h2>产品是什么</h2>
-        <p>不是聊天，不是刷内容。它是你的提问系统。</p>
+      <div class="ctaRow">
+        <a class="btn primary" href="#do">查看它能做什么 →</a>
+        <a class="btn ghost" href="mailto:hello@querya.cn">联系我</a>
       </div>
 
-      <div class="grid">
-        <div class="card reveal">
-          <h4>主动投递关键问题</h4>
-          <p>你不需要先想好怎么问。Querya 把高价值问题主动送到你面前。</p>
-        </div>
-
-        <div class="card reveal">
-          <h4>对齐长期目标</h4>
-          <p>每天 10 分钟，把注意力从噪音拉回真正重要的方向。</p>
-        </div>
-
-        <div class="card reveal">
-          <h4>形成思考资产</h4>
-          <p>收藏与记录，让你的判断路径可回看，可复盘，可迭代。</p>
-        </div>
+      <div class="flow" aria-label="flow">
+        <div class="box">你设定目标</div>
+        <div class="arrow">→</div>
+        <div class="box">Querya 投递问题</div>
+        <div class="arrow">→</div>
+        <div class="box">你更快做对决策</div>
       </div>
     </section>
 
-    <!-- FORMAT -->
-    <section class="section" id="format">
-      <div class="sectionHead reveal">
-        <h2>主要形式</h2>
-        <p>固定结构 + 跨学科分布，主流产品体验的干净表达。</p>
+    <div class="hr"></div>
+
+    <!-- WHY NOT CHATBOT -->
+    <section id="difference">
+      <h2>为什么不是 Chatbot？</h2>
+      <p class="sub">你不缺 AI。你缺的是一个能把“思考过程”变成日常机制的系统。 :contentReference[oaicite:1]{index=1}</p>
+
+      <div class="list">
+        <h3>现实是这样</h3>
+        <ul>
+          <li>你开一个对话框，来回 20 轮，越聊越散 <span>（问题本身就很耗）</span></li>
+          <li>最后还是你自己整理、收尾、执行 <span>（AI 只是给建议）</span></li>
+        </ul>
       </div>
 
-      <div class="split">
-        <div class="panel reveal">
-          <h4>Daily 6 topics</h4>
-          <ul>
-            <li>AI / Frontier Tech</li>
-            <li>Business / Strategy</li>
-            <li>Social Skills</li>
-            <li>Liberal Arts</li>
-            <li>Communication</li>
-            <li>Meta-thinking</li>
-          </ul>
-        </div>
+      <div class="list">
+        <h3>Querya 的立场</h3>
+        <ul>
+          <li><b>Querya 不讨论。</b>它把关键问题摆到桌面上。</li>
+          <li>它默认你是老板，你需要的是“问法”，不是“闲聊”。 :contentReference[oaicite:2]{index=2}</li>
+        </ul>
+      </div>
 
-        <div class="panel reveal">
-          <h4>Interaction</h4>
-          <ul>
-            <li>收藏高价值问题</li>
-            <li>记录你的回应与决策理由</li>
-            <li>回看轨迹，发现固定盲区</li>
-            <li>阶段性总结，形成个人方法论</li>
-          </ul>
+      <div class="compare" aria-label="comparison">
+        <div class="row">
+          <div class="cell head">普通 Chatbot</div>
+          <div class="cell head">Querya</div>
+        </div>
+        <div class="row">
+          <div class="cell">交互：多轮对话</div>
+          <div class="cell">交互：每日投递</div>
+        </div>
+        <div class="row">
+          <div class="cell">输出：建议、答案</div>
+          <div class="cell">输出：问题结构、盲区提醒</div>
+        </div>
+        <div class="row">
+          <div class="cell">节奏：你想起来才用</div>
+          <div class="cell">节奏：每天固定复利</div>
+        </div>
+        <div class="row">
+          <div class="cell muted">你来配合它</div>
+          <div class="cell muted">它来配合你</div>
         </div>
       </div>
     </section>
 
-    <!-- SAMPLE -->
-    <section class="section" id="sample">
-      <div class="sectionHead reveal">
-        <h2>示例</h2>
-        <p>风格展示用，你可以随时替换成 App 内真实内容。</p>
+    <div class="hr"></div>
+
+    <!-- WHAT IT DOES -->
+    <section id="do">
+      <h2>Querya 能为你完成</h2>
+      <p class="sub">核心形式是 Daily 6：每天 6 个问题，跨学科分布，固定结构，长期可回看。</p>
+
+      <div class="list">
+        <h3>Daily 6 Topics</h3>
+        <ul>
+          <li>AI / Frontier Tech</li>
+          <li>Business / Strategy</li>
+          <li>Social Skills</li>
+          <li>Liberal Arts</li>
+          <li>Communication</li>
+          <li>Meta-thinking</li>
+        </ul>
       </div>
 
-      <div class="sample">
-        <div class="q reveal">
-          <b>Business</b>
-          <span>如果我把产品的“核心承诺”写成一句话，它是效率工具、身份符号还是日常仪式？我能用什么指标验证它？</span>
-        </div>
-        <div class="q reveal">
-          <b>Meta-thinking</b>
-          <span>我最近一次重要决策背后的默认假设是什么？如果该假设反过来成立，我会采取哪条完全不同的策略？</span>
-        </div>
-        <div class="q reveal">
-          <b>Social</b>
-          <span>我与关键合作者之间的隐性契约是什么？它基于利益、信任还是共同叙事？我是否在无意中破坏它？</span>
-        </div>
+      <div class="list">
+        <h3>你会得到什么</h3>
+        <ul>
+          <li>更早暴露盲区 <span>（你没想到要问的那类）</span></li>
+          <li>更稳定的长期对齐 <span>（目标不会“丢”）</span></li>
+          <li>可回看的思考资产 <span>（判断路径可复盘）</span></li>
+        </ul>
       </div>
 
-      <div class="ctaRow reveal" style="margin-top:16px;">
-        <a class="btn" href="mailto:hello@querya.cn">合作与投资沟通 →</a>
-        <a class="btn secondary" href="#legal">查看条款</a>
+      <div class="list">
+        <h3>示例（风格展示）</h3>
+        <ul>
+          <li><span>Business：</span>如果把产品的核心承诺写成一句话，它是效率工具、身份符号还是日常仪式？我怎么验证它？</li>
+          <li><span>Meta：</span>我最近一次重要决策的默认假设是什么？如果反过来成立，我会走哪条完全不同的路？</li>
+          <li><span>Social：</span>我与关键合作者的隐性契约是什么？我是否正在无意破坏它？</li>
+        </ul>
       </div>
     </section>
+
+    <div class="hr"></div>
+
+    <!-- START -->
+    <section id="start">
+      <h2>三步开始</h2>
+      <p class="sub">越简单越好：打开 App，接收问题，回答/收藏，持续回看。</p>
+
+      <div class="steps">
+        <div class="step">
+          <b>Step</b>
+          <div class="n">1</div>
+          <div>设定你的目标/主题</div>
+        </div>
+        <div class="step">
+          <b>Step</b>
+          <div class="n">2</div>
+          <div>每天接收 Daily 6</div>
+        </div>
+        <div class="step">
+          <b>Step</b>
+          <div class="n">3</div>
+          <div>回答、收藏、回看轨迹</div>
+        </div>
+      </div>
+
+      <div class="final">
+        <p>你不是缺答案。</p>
+        <p>你是缺一套稳定的“提问系统”。</p>
+        <p><b>Querya 只做一件事：让你持续问对。</b></p>
+      </div>
+
+      <div class="ctaRow">
+        <a class="btn primary" href="mailto:hello@querya.cn">合作 / 投资沟通 →</a>
+        <a class="btn ghost" href="#manifesto">回到顶部</a>
+      </div>
+    </section>
+
+    <div class="hr"></div>
 
     <!-- LEGAL -->
-    <section class="section" id="legal">
-      <div class="sectionHead reveal">
-        <h2>Legal</h2>
-        <p>必要的页面保持简洁清晰。</p>
-      </div>
+    <section id="legal">
+      <h2>Legal</h2>
+      <p class="sub">必要页面保持简洁。</p>
 
-      <div class="panel reveal">
-        <div class="footerLinks">
-          <a href="./terms.html">用户条款</a>
-          <a href="./privacy.html">隐私政策</a>
-          <a href="./ai-disclaimer.html">AI 内容生成声明</a>
-          <a href="mailto:hello@querya.cn">hello@querya.cn</a>
-        </div>
-        <div class="tiny" style="margin-top:12px;">© <span id="y"></span> Querya</div>
+      <div class="ctaRow" style="margin-top:14px;">
+        <a class="btn ghost" href="./terms.html">用户条款</a>
+        <a class="btn ghost" href="./privacy.html">隐私政策</a>
+        <a class="btn ghost" href="./ai-disclaimer.html">AI 内容生成声明</a>
       </div>
     </section>
 
     <footer>
-      <div class="tiny">Querya • Daily Question Engine</div>
-      <div class="footerLinks">
-        <a href="#product">产品</a>
-        <a href="#format">形式</a>
-        <a href="#sample">示例</a>
+      <div>© <span id="y"></span> Querya. All rights reserved.</div>
+      <div class="footlinks">
+        <a href="mailto:hello@querya.cn">hello@querya.cn</a>
+        <a href="#manifesto">宣言</a>
+        <a href="#start">三步开始</a>
       </div>
     </footer>
 
@@ -578,16 +549,6 @@
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
-
-    // subtle reveal on scroll
-    const els = document.querySelectorAll(".reveal");
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add("show");
-      });
-    }, { threshold: 0.12 });
-    els.forEach(el => io.observe(el));
   </script>
 </body>
 </html>
-
