@@ -58,7 +58,7 @@
             z-index: 1000;
             padding: 1rem 2rem;
             background: var(--yellow);
-            border-bottom: var(--border);
+            border-bottom: none;
         }
 
         .nav-container {
@@ -481,373 +481,94 @@
         .domain-card .tag.arts { background: #AF52DE; }
         .domain-card .tag.meta { background: var(--blue); }
 
-        /* ========== Chatbot Section ========== */
-        .chatbot {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        .chatbot-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .chatbot-info h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 0.5rem;
-        }
-
-        .chatbot-info .subtitle {
-            font-size: 1.1rem;
-            color: var(--gray-light);
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .chatbot-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .chatbot-feature {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: var(--white);
-            color: var(--black);
-            border: var(--border);
-            border-radius: var(--radius);
-            padding: 1rem 1.25rem;
-            transform: rotate(-1deg);
-        }
-
-        .chatbot-feature:nth-child(2) { transform: rotate(0.5deg); }
-        .chatbot-feature:nth-child(3) { transform: rotate(-0.5deg); }
-        .chatbot-feature:nth-child(4) { transform: rotate(1deg); }
-
-        .chatbot-feature .icon {
-            width: 40px;
-            height: 40px;
-            background: var(--yellow);
-            border: var(--border);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            flex-shrink: 0;
-        }
-
-        .chatbot-feature p {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .chatbot-visual {
-            background: var(--yellow);
-            border: var(--border);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .chatbot-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--black);
-        }
-
-        .chatbot-dots {
-            display: flex;
-            gap: 0.35rem;
-        }
-
-        .chatbot-dots span {
-            width: 12px;
-            height: 12px;
-            background: var(--black);
-            border-radius: 50%;
-        }
-
-        .chatbot-id {
-            margin-left: auto;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--gray);
-        }
-
-        .chatbot-terminal {
-            background: var(--black);
-            color: var(--green);
-            font-family: monospace;
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            margin-bottom: 1rem;
-        }
-
-        .chatbot-terminal .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 18px;
-            background: var(--yellow);
-            animation: blink 1s infinite;
-            vertical-align: middle;
-            margin-left: 4px;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        .question-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .question-mini {
-            background: var(--white);
-            border: var(--border);
-            border-radius: var(--radius-sm);
-            padding: 0.875rem 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .question-mini .title {
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .question-mini .tag {
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            text-transform: uppercase;
-            color: var(--white);
-        }
-
-        .question-mini .arrow {
-            font-size: 1rem;
-        }
-
-        /* ========== Pricing ========== */
-        .pricing {
-            background: var(--white);
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-
-        .pricing-card {
-            background: var(--yellow);
-            border: var(--border);
-            border-radius: var(--radius-lg);
-            padding: 2rem 1.5rem;
-            text-align: center;
-            position: relative;
-            transition: all 0.15s ease;
-        }
-
-        .pricing-card:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: var(--shadow);
-        }
-
-        .pricing-card.popular {
-            box-shadow: var(--shadow);
-        }
-
-        .pricing-card .badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--black);
-            color: var(--white);
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.35rem 1rem;
-            border-radius: 20px;
-            white-space: nowrap;
-        }
-
-        .pricing-card .times {
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .pricing-card .times span {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .pricing-card .unit-price {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin: 0.5rem 0 1.5rem;
-        }
-
-        .pricing-card .price {
-            font-size: 2rem;
-            font-weight: 900;
-        }
-
-        .pricing-card .price span {
-            font-size: 1rem;
-        }
-
-        .pricing-card .discount {
-            display: inline-block;
-            margin-top: 0.5rem;
-            background: var(--pink);
-            color: var(--white);
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 0.25rem 0.75rem;
-            border-radius: 6px;
-        }
-
-        /* Subscription Card */
-        .subscription-card {
-            margin-top: 3rem;
-            background: var(--yellow);
-            border: var(--border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            padding: 3rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .subscription-info h3 {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 0.5rem;
-        }
-
-        .subscription-info .tagline {
-            font-size: 1rem;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
-
-        .subscription-features {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            list-style: none;
-        }
-
-        .subscription-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 500;
-        }
-
-        .subscription-features li::before {
-            content: '✓';
-            width: 24px;
-            height: 24px;
-            background: var(--black);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        .subscription-price {
-            text-align: center;
-        }
-
-        .subscription-price .amount {
-            font-size: 4rem;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .subscription-price .amount span {
-            font-size: 1.5rem;
-        }
-
-        .subscription-price .period {
-            font-size: 1.25rem;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
-
-        /* ========== Examples ========== */
+        /* ========== Examples (Question Cards) ========== */
         .examples {
             background: var(--white);
         }
 
-        .example-group {
-            margin-bottom: 3rem;
-        }
-
-        .example-theme {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .example-theme span {
-            background: var(--yellow);
-            border: var(--border);
-            border-radius: var(--radius-sm);
-            padding: 0.5rem 1.25rem;
-            font-weight: 700;
-        }
-
-        .example-cards {
+        .qcards {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            grid-template-columns: 1fr;
+            gap: 2rem;
         }
 
-        .example-card {
+        .qcard {
+            background: var(--white);
+            border: var(--border);
+            border-radius: 0;
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem 1.5rem 1.25rem;
+        }
+
+        .qcard-top {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .qcard-brand {
             background: var(--yellow);
             border: var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            padding: 1.5rem;
-        }
-
-        .example-card .role {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--gray);
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--black);
-        }
-
-        .example-card .question {
+            padding: 0.45rem 0.9rem;
+            font-family: "Arial Black", Arial, sans-serif;
+            font-weight: 900;
             font-size: 1.15rem;
-            font-weight: 700;
-            line-height: 1.4;
+            line-height: 1;
         }
+
+        .qcard-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            font-size: 1.25rem;
+        }
+
+        .qcard-title {
+            font-size: 1.45rem;
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 0.75rem;
+        }
+
+        .qcard-subtitle {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+
+        .qcard-body {
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.75;
+            margin-bottom: 1.25rem;
+        }
+
+        .qcard-body p {
+            margin-bottom: 0.9rem;
+        }
+
+        .qcard-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .qcard-tag {
+            display: inline-block;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: var(--white);
+            border: var(--border);
+        }
+
+        .qcard-tag.tech { background: var(--green); }
+        .qcard-tag.biz { background: var(--pink); }
+        .qcard-tag.social { background: #FF9500; }
+        .qcard-tag.arts { background: #AF52DE; }
+        .qcard-tag.meta { background: #FF2D55; }
 
         /* ========== Differentiation ========== */
         .differentiation {
@@ -1075,7 +796,6 @@
             .mechanism-flow,
             .pain-grid,
             .steps-grid,
-            .example-cards,
             .diff-grid,
             .benefits-grid {
                 grid-template-columns: 1fr;
@@ -1084,12 +804,6 @@
             .mechanism-operator { text-align: center; }
             
             .domains-grid { grid-template-columns: repeat(3, 1fr); }
-            
-            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
-            
-            .chatbot-content { grid-template-columns: 1fr; }
-            
-            .subscription-card { grid-template-columns: 1fr; text-align: center; }
             
             .footer-top { grid-template-columns: 1fr 1fr; }
         }
@@ -1101,8 +815,6 @@
             .section-header h2 { font-size: 2rem; }
             
             .domains-grid { grid-template-columns: repeat(2, 1fr); }
-            
-            .pricing-grid { grid-template-columns: 1fr; }
             
             .footer-top { grid-template-columns: 1fr; text-align: center; }
             .footer-brand p { max-width: none; }
@@ -1120,7 +832,6 @@
             </a>
             <ul class="nav-links">
                 <li><a href="#mechanism">机制</a></li>
-                <li><a href="#chatbot">思考助手</a></li>
                 <li><a href="#cta">开始</a></li>
             </ul>
         </div>
@@ -1281,115 +992,98 @@
         </div>
     </section>
 
-    <!-- Chatbot Section -->
-    <section class="chatbot" id="chatbot">
-        <div class="container">
-            <div class="chatbot-content">
-                <div class="chatbot-info">
-                    <h2>思考助手</h2>
-                    <p class="subtitle">Thinking Assistant</p>
-                    <div class="chatbot-features">
-                        <div class="chatbot-feature">
-                            <div class="icon">🧠</div>
-                            <p>记住你的背景，越聊越懂你</p>
-                        </div>
-                        <div class="chatbot-feature">
-                            <div class="icon">📤</div>
-                            <p>一键发送问题卡片，深入探讨</p>
-                        </div>
-                        <div class="chatbot-feature">
-                            <div class="icon">💬</div>
-                            <p>流畅打字机 + 互动式选项效果</p>
-                        </div>
-                        <div class="chatbot-feature">
-                            <div class="icon">∞</div>
-                            <p>解锁无限对话，随时继续你的思考</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chatbot-visual">
-                    <div class="chatbot-header">
-                        <div class="chatbot-dots">
-                            <span></span><span></span><span></span>
-                        </div>
-                        <span class="chatbot-id">THINKING_PROCESS_ID: 2024</span>
-                    </div>
-                    <div class="chatbot-terminal">
-                        <span>> 深度思考...</span><span class="cursor"></span>
-                    </div>
-                    <div class="question-cards">
-                        <div class="question-mini">
-                            <div>
-                                <span class="title">⏳ 启动的摩擦力 | The Friction of Starting</span>
-                                <span class="tag" style="background: var(--green); margin-left: 8px;">Tech</span>
-                            </div>
-                            <span class="arrow">↗</span>
-                        </div>
-                        <div class="question-mini">
-                            <div>
-                                <span class="title">🏛️ 信任的脚手架 | The Scaffolding of Trust</span>
-                                <span class="tag" style="background: var(--pink); margin-left: 8px;">Biz</span>
-                            </div>
-                            <span class="arrow">↗</span>
-                        </div>
-                        <div class="question-mini">
-                            <div>
-                                <span class="title">🎯 被忽视的背景音 | Background Noise</span>
-                                <span class="tag" style="background: var(--blue); margin-left: 8px;">Meta</span>
-                            </div>
-                            <span class="arrow">↗</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Examples -->
     <section class="examples" id="examples">
         <div class="container">
             <div class="section-header">
-                <h2>同题不同人</h2>
-                <p>突出定制的力量</p>
-            </div>
-            
-            <div class="example-group">
-                <div class="example-theme">
-                    <span>主题：选择</span>
-                </div>
-                <div class="example-cards">
-                    <div class="example-card">
-                        <p class="role">对创业者</p>
-                        <p class="question">现金流还是增长？哪个更能让你活到明年？</p>
-                    </div>
-                    <div class="example-card">
-                        <p class="role">对学生</p>
-                        <p class="question">成绩还是作品集？哪个更能证明你的能力？</p>
-                    </div>
-                    <div class="example-card">
-                        <p class="role">对管理者</p>
-                        <p class="question">授权还是控制？哪个更能让团队成长？</p>
-                    </div>
-                </div>
+                <h2>问题示例</h2>
+                <p>问题卡片风格参照 App 内</p>
             </div>
 
-            <div class="example-group">
-                <div class="example-theme">
-                    <span>主题：焦虑</span>
+            <div class="qcards">
+                <!-- 1 -->
+                <div class="qcard">
+                    <div class="qcard-top">
+                        <div class="qcard-brand">Querya</div>
+                        <div class="qcard-actions" aria-hidden="true">
+                            💡 ✏️ ✈️ ⤴️
+                        </div>
+                    </div>
+                    <div class="qcard-title">🧠 前沿科技：The Memory Bottleneck</div>
+                    <div class="qcard-subtitle">When AI Forgets What Matters</div>
+                    <div class="qcard-body">
+                        <p>OpenAI的o1模型展示了"思考时间"的价值，但仍然存在context window的硬限制。人脑用海马体-皮层系统实现了"无限记忆"的压缩与检索。最新研究显示，MemGPT通过分层memory架构部分解决了这个问题。</p>
+                        <p><strong>问题：</strong> 如果你要设计一个AI系统的记忆架构，你会选择"遗忘"（像人脑一样选择性忘记）还是"无限存储"（技术乌托邦）？这个选择会如何影响AI创业公司的产品设计？特别是在你考虑的"传统企业AI转型"场景中，什么样的记忆模式最符合中国企业的需求？</p>
+                    </div>
+                    <span class="qcard-tag tech">TECHNOLOGY</span>
                 </div>
-                <div class="example-cards">
-                    <div class="example-card">
-                        <p class="role">对决策者</p>
-                        <p class="question">你的焦虑是风险信号，还是身份债？</p>
+
+                <!-- 2 -->
+                <div class="qcard">
+                    <div class="qcard-top">
+                        <div class="qcard-brand">Querya</div>
+                        <div class="qcard-actions" aria-hidden="true">
+                            💡 ✏️ ✈️ ⤴️
+                        </div>
                     </div>
-                    <div class="example-card">
-                        <p class="role">对完美主义者</p>
-                        <p class="question">你在担心"失败"，还是"被看见的失败"？</p>
+                    <div class="qcard-title">💰 商业掌握：The Capital Paradox</div>
+                    <div class="qcard-subtitle">Why Best Companies Raise Less Money</div>
+                    <div class="qcard-body">
+                        <p>Zepto在印度10分钟送达，估值$5B但只融了$1B。同期的竞争对手融了$3B但已经死了。中国的美团vs百度外卖也是类似故事。</p>
+                        <p><strong>问题：</strong> 构建一个框架：什么时候“融资能力” actually becomes a weakness？结合你要做的资源型存量客户市场（例如大型企业生态内的核心客户/渠道/合作伙伴），如果他们给你 500万战略投资 vs 你自己通过产品与服务赚 50万现金流，哪个对你更有利？设计你的“资本效率函数”——在什么点上，多一块钱的边际收益开始变成负数？</p>
                     </div>
-                    <div class="example-card">
-                        <p class="role">对职场人</p>
-                        <p class="question">你焦虑的是能力不够，还是时间不够？</p>
+                    <span class="qcard-tag biz">BUSINESS</span>
+                </div>
+
+                <!-- 3 -->
+                <div class="qcard">
+                    <div class="qcard-top">
+                        <div class="qcard-brand">Querya</div>
+                        <div class="qcard-actions" aria-hidden="true">
+                            💡 ✏️ ✈️ ⤴️
+                        </div>
                     </div>
+                    <div class="qcard-title">🎭 交际能力：The Trust Speedrun</div>
+                    <div class="qcard-subtitle">从陌生人到内圈的最快路径</div>
+                    <div class="qcard-body">
+                        <p>研究显示，shared vulnerability比shared success更快建立深度信任。但在中国商业语境下，"示弱"可能被理解为"无能"。</p>
+                        <p><strong>问题：</strong> 设计一个"信任加速protocol"：如何在与关二代的第一次见面就建立deep trust？考虑中韩美三种文化context，什么样的"vulnerability"是strategic的？给出具体的conversation flow：前10分钟说什么，怎么从small talk过渡到real talk？</p>
+                    </div>
+                    <span class="qcard-tag social">SOCIAL</span>
+                </div>
+
+                <!-- 4 -->
+                <div class="qcard">
+                    <div class="qcard-top">
+                        <div class="qcard-brand">Querya</div>
+                        <div class="qcard-actions" aria-hidden="true">
+                            💡 ✏️ ✈️ ⤴️
+                        </div>
+                    </div>
+                    <div class="qcard-title">🌍 泛文科：新儒家与硅谷文化的冲突</div>
+                    <div class="qcard-subtitle">When Hierarchy Meets Disruption</div>
+                    <div class="qcard-body">
+                        <p>中国企业的决策链本质是儒家权力观的现代投射。而硅谷的"move fast break things"是纯粹的反权威主义。</p>
+                        <p><strong>问题：</strong> 当你把硅谷的AI技术卖给儒家文化的传统企业时，如何reconcile这个根本性冲突？分析：为什么日本能创造出"既尊重hierarchy又innovative"的企业文化（如丰田），而中国企业普遍做不到？你的"AI转型"方案如何不触动权力结构while still driving change？</p>
+                    </div>
+                    <span class="qcard-tag arts">LIBERAL ARTS</span>
+                </div>
+
+                <!-- 5 -->
+                <div class="qcard">
+                    <div class="qcard-top">
+                        <div class="qcard-brand">Querya</div>
+                        <div class="qcard-actions" aria-hidden="true">
+                            💡 ✏️ ✈️ ⤴️
+                        </div>
+                    </div>
+                    <div class="qcard-title">🔮 综合思考：The Age Arbitrage</div>
+                    <div class="qcard-subtitle">19岁的诅咒还是祝福？</div>
+                    <div class="qcard-body">
+                        <p>Mark Zuckerberg 19岁创立Facebook，Vitalik Buterin 19岁创立Ethereum。但他们都是在"年龄不重要"的技术领域。你要进入的是"年龄即hierarchy"的中国传统企业。</p>
+                        <p><strong>问题：</strong> 如何把19岁从liability转化为unfair advantage？设计三个具体的narrative strategies，让50岁的传统企业老板不是"despite your age"而是"because of your age"选择你。提示：想想为什么奢侈品牌找年轻人做中国区CEO？这里的深层逻辑如何应用到你的AI转型服务？</p>
+                    </div>
+                    <span class="qcard-tag meta">META-THINKING</span>
                 </div>
             </div>
         </div>
@@ -1476,7 +1170,6 @@
                     <h4>产品</h4>
                     <ul>
                         <li><a href="#mechanism">个性化机制</a></li>
-                        <li><a href="#chatbot">思考助手</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
