@@ -1,554 +1,1320 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Querya 是你的 Daily Question Engine：每天一组结构化高质量问题，让判断力与长期思考进入日常节奏。" />
-  <title>Querya — Daily Question Engine</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Querya - 每天5问，为你定制</title>
+    <meta name="description" content="Querya 是个人化的每日提问引擎。你提供上下文，我们生成训练。让思考有身份，也有当下。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Querya 品牌色 - 贴近 App 内设计 */
+            --yellow-primary: #FFE566;
+            --yellow-light: #FFF8DC;
+            --yellow-pale: #FFFEF5;
+            --black: #1A1A1A;
+            --gray-dark: #333333;
+            --gray: #666666;
+            --white: #FFFFFF;
+            
+            /* Neo-Brutalism 系统 */
+            --border-width: 3px;
+            --border: var(--border-width) solid var(--black);
+            --shadow: 6px 6px 0 var(--black);
+            --shadow-sm: 4px 4px 0 var(--black);
+            --shadow-lg: 8px 8px 0 var(--black);
+        }
 
-  <style>
-    :root{
-      --bg:#FFD400;
-      --ink:#0B0B0B;
-      --muted:rgba(11,11,11,.72);
-      --line:rgba(11,11,11,.18);
-      --card:rgba(255,255,255,.55);
-      --card2:rgba(255,255,255,.35);
-      --radius:16px;
-      --max:900px;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    *{ box-sizing:border-box; }
-    html{ scroll-behavior:smooth; }
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", Arial, sans-serif;
-      font-weight:900; /* 黑色加粗 */
-      letter-spacing:-0.01em;
-      line-height:1.35;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    a{ color:var(--ink); text-decoration:none; }
-    a:hover{ text-decoration:underline; text-decoration-thickness:2px; }
+        body {
+            font-family: 'Space Grotesk', 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--yellow-primary);
+            color: var(--black);
+            line-height: 1.6;
+            font-size: 18px;
+        }
 
-    .wrap{ max-width:var(--max); margin:0 auto; padding:26px 18px 72px; }
+        /* ========== Navigation ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2.5rem;
+            background: var(--yellow-primary);
+            border-bottom: var(--border);
+        }
 
-    /* 顶部：极简、像宣言页 */
-    .top{
-      position:sticky;
-      top:0;
-      z-index:20;
-      padding:14px 0;
-      background:linear-gradient(to bottom, rgba(255,212,0,.92), rgba(255,212,0,.72), rgba(255,212,0,0));
-      backdrop-filter: blur(10px);
-    }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--black);
+        }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      user-select:none;
-    }
-    .mark{
-      width:40px;
-      height:40px;
-      border-radius:12px;
-      background:var(--ink);
-      display:grid;
-      place-items:center;
-    }
-    .mark svg{ width:22px; height:22px; }
-    .brandText{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      line-height:1.1;
-    }
-    .brandText b{
-      font-weight:1000;
-      text-transform:uppercase;
-      letter-spacing:-0.04em;
-      font-size:16px;
-    }
-    .brandText span{
-      font-size:12px;
-      opacity:.82;
-      font-weight:950;
-    }
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
 
-    .links{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-      font-weight:950;
-    }
-    .links a{
-      opacity:.9;
-      padding:6px 10px;
-      border-radius:999px;
-      background:transparent;
-      border:1px solid transparent;
-    }
-    .links a:hover{
-      border-color:var(--line);
-      text-decoration:none;
-    }
+        .logo-text {
+            font-size: 1.875rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
 
-    /* 版式：大标题 + 断句 */
-    .kicker{
-      margin-top:14px;
-      display:block;
-      text-transform:uppercase;
-      font-size:12px;
-      letter-spacing:.08em;
-      color:var(--muted);
-      font-weight:1000;
-    }
+        .nav-links {
+            display: flex;
+            gap: 0.75rem;
+            list-style: none;
+        }
 
-    h1{
-      margin:14px 0 10px;
-      font-size:clamp(44px, 6vw, 76px);
-      line-height:1.02;
-      letter-spacing:-0.06em;
-      font-weight:1100;
-      text-transform:uppercase;
-    }
+        .nav-links a {
+            display: block;
+            padding: 0.625rem 1.25rem;
+            background: var(--white);
+            border: var(--border);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.15s ease;
+        }
 
-    .lead{
-      font-size:clamp(18px, 2.2vw, 22px);
-      max-width:64ch;
-      margin:0 0 18px;
-    }
+        .nav-links a:hover {
+            box-shadow: var(--shadow-sm);
+            transform: translate(-2px, -2px);
+        }
 
-    .stack p{
-      margin:6px 0;
-      font-size:clamp(18px, 2.1vw, 22px);
-    }
-    .stack .muted{ color:var(--muted); }
+        /* ========== Sections Base ========== */
+        section {
+            padding: 8rem 3rem;
+            border-top: var(--border);
+        }
 
-    .ctaRow{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin:18px 0 0;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid rgba(11,11,11,.22);
-      font-weight:1000;
-      cursor:pointer;
-    }
-    .btn.primary{
-      background:var(--ink);
-      color:var(--bg);
-      border-color:var(--ink);
-    }
-    .btn.ghost{
-      background:rgba(255,255,255,.35);
-      color:var(--ink);
-    }
-    .btn:hover{ transform: translateY(-1px); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .hr{
-      margin:28px 0;
-      height:1px;
-      background:var(--line);
-    }
+        .container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-    /* 箭头流程（Mailya 风格核心之一） */
-    .flow{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      gap:10px;
-      align-items:center;
-    }
-    .flow .box{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      min-height:70px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      font-weight:1000;
-    }
-    .flow .arrow{
-      font-size:22px;
-      opacity:.9;
-      padding:0 4px;
-      user-select:none;
-    }
-    @media (max-width: 760px){
-      .flow{
-        grid-template-columns: 1fr;
-      }
-      .flow .arrow{ display:none; }
-    }
+        /* ========== Hero Section ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10rem 3rem 6rem;
+            position: relative;
+            border-top: none;
+        }
 
-    /* 标题 */
-    h2{
-      margin:0 0 8px;
-      font-size:clamp(22px, 3.2vw, 34px);
-      letter-spacing:-0.04em;
-      text-transform:uppercase;
-      font-weight:1100;
-    }
-    .sub{
-      margin:0;
-      color:var(--muted);
-      max-width:70ch;
-      font-weight:950;
-    }
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 2rem;
+            letter-spacing: -3px;
+        }
 
-    /* 对比表（简洁，不走 SaaS 卡片海） */
-    .compare{
-      margin-top:16px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      overflow:hidden;
-      background:rgba(255,255,255,.28);
-    }
-    .compare .row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:0;
-      border-top:1px solid var(--line);
-    }
-    .compare .row:first-child{ border-top:0; }
-    .compare .cell{
-      padding:14px;
-      border-right:1px solid var(--line);
-      font-weight:1000;
-    }
-    .compare .cell:last-child{ border-right:0; }
-    .compare .head{
-      background:rgba(255,255,255,.42);
-      text-transform:uppercase;
-      letter-spacing:-0.02em;
-    }
-    .compare .muted{ color:var(--muted); font-weight:950; }
+        .hero h1 .highlight {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 0.1em 0.4em;
+            display: inline-block;
+            margin: 0.2em 0;
+        }
 
-    @media (max-width: 760px){
-      .compare .row{ grid-template-columns: 1fr; }
-      .compare .cell{ border-right:0; border-top:1px solid var(--line); }
-      .compare .row:first-child .cell{ border-top:0; }
-    }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            max-width: 600px;
+            color: var(--gray-dark);
+        }
 
-    /* 列表块 */
-    .list{
-      margin-top:14px;
-      background:var(--card2);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px 14px 10px;
-    }
-    .list h3{
-      margin:0 0 10px;
-      font-size:14px;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      color:var(--muted);
-      font-weight:1100;
-    }
-    .list ul{
-      margin:0;
-      padding-left:18px;
-    }
-    .list li{
-      margin:8px 0;
-      font-weight:1000;
-    }
-    .list li span{ color:var(--muted); font-weight:950; }
+        .hero-note {
+            font-size: 1.125rem;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3rem;
+            display: inline-block;
+        }
 
-    /* 三步开始 */
-    .steps{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:12px;
-    }
-    .step{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-      min-height:120px;
-    }
-    .step b{
-      display:block;
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin-bottom:8px;
-      font-weight:1100;
-    }
-    .step .n{
-      font-size:26px;
-      font-weight:1200;
-      letter-spacing:-0.04em;
-      margin-bottom:6px;
-    }
-    @media (max-width: 760px){
-      .steps{ grid-template-columns: 1fr; }
-    }
+        .hero-buttons {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
 
-    /* 结尾宣言块 */
-    .final{
-      margin-top:18px;
-      padding:16px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.28);
-    }
-    .final p{
-      margin:6px 0;
-      font-size:clamp(18px, 2.1vw, 22px);
-      font-weight:1100;
-      letter-spacing:-0.02em;
-    }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 1.125rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            border: var(--border);
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
 
-    footer{
-      margin-top:30px;
-      padding-top:18px;
-      border-top:1px solid var(--line);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      color:var(--muted);
-      font-weight:950;
-      font-size:13px;
-    }
-    footer .footlinks{ display:flex; gap:12px; flex-wrap:wrap; }
-  </style>
+        .btn-primary {
+            background: var(--black);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--black);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--black);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--black);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .scroll-arrow {
+            width: 40px;
+            height: 40px;
+            border: var(--border);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-12px); }
+            60% { transform: translateX(-50%) translateY(-6px); }
+        }
+
+        /* ========== Positioning Section ========== */
+        .positioning {
+            background: var(--white);
+            text-align: center;
+        }
+
+        .positioning h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2.5rem;
+            letter-spacing: -1px;
+        }
+
+        .positioning-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            font-size: 1.375rem;
+            font-weight: 500;
+            color: var(--gray-dark);
+        }
+
+        .positioning-lines .emphasis {
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* ========== Pain Points Section ========== */
+        .pain-points {
+            text-align: center;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .pain-card {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 2.5rem 2rem;
+            transition: all 0.15s ease;
+        }
+
+        .pain-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--black);
+        }
+
+        .pain-card .problem {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-bottom: 1.5rem;
+        }
+
+        .pain-card .solution {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        /* ========== Mechanism Section ========== */
+        .mechanism {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .mechanism h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 5rem;
+            letter-spacing: -1px;
+        }
+
+        .mechanism-flow {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .mechanism-block {
+            background: var(--yellow-primary);
+            color: var(--black);
+            border: var(--border);
+            padding: 2.5rem;
+        }
+
+        .mechanism-block h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .mechanism-block .subtitle {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--black);
+        }
+
+        .mechanism-block ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mechanism-block li {
+            font-size: 1.125rem;
+            font-weight: 500;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .mechanism-block li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        .mechanism-plus {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--yellow-primary);
+            align-self: center;
+            margin-top: 4rem;
+        }
+
+        .mechanism-block.result {
+            background: var(--white);
+        }
+
+        .mechanism-block.result h3 {
+            color: var(--black);
+        }
+
+        /* ========== Formula Section ========== */
+        .formula {
+            text-align: center;
+            background: var(--yellow-light);
+        }
+
+        .formula-items {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .formula-item {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 2rem 3rem;
+        }
+
+        .formula-item .label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .formula-item .value {
+            font-size: 1.75rem;
+            font-weight: 900;
+        }
+
+        .formula-operator {
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+
+        /* ========== Steps Section ========== */
+        .steps {
+            background: var(--white);
+        }
+
+        .steps h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 5rem;
+            letter-spacing: -1px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .step-card {
+            background: var(--yellow-primary);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.15s ease;
+        }
+
+        .step-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--black);
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: var(--black);
+            color: var(--white);
+            border: var(--border);
+            font-size: 2rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card p {
+            font-size: 1.125rem;
+            color: var(--gray-dark);
+        }
+
+        .step-card .time {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gray);
+            margin-top: 1rem;
+        }
+
+        /* ========== Domains Section ========== */
+        .domains h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .domains-subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--gray-dark);
+            margin-bottom: 4rem;
+        }
+
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+        }
+
+        .domain-card {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.15s ease;
+        }
+
+        .domain-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 7px 7px 0 var(--black);
+        }
+
+        .domain-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .domain-card h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .domain-card p {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* ========== Examples Section ========== */
+        .examples {
+            background: var(--white);
+        }
+
+        .examples h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .examples-subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--gray-dark);
+            margin-bottom: 4rem;
+        }
+
+        .example-group {
+            margin-bottom: 4rem;
+        }
+
+        .example-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .example-theme {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .example-theme span {
+            background: var(--yellow-primary);
+            border: var(--border);
+            padding: 0.5rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .example-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .example-card {
+            background: var(--yellow-light);
+            border: var(--border);
+            box-shadow: var(--shadow-sm);
+            padding: 2rem;
+        }
+
+        .example-card .role {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--black);
+        }
+
+        .example-card .question {
+            font-size: 1.25rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        /* ========== Differentiation Section ========== */
+        .differentiation {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .differentiation h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -1px;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .diff-card {
+            padding: 2rem;
+            border: 3px solid var(--gray);
+        }
+
+        .diff-card.other {
+            opacity: 0.6;
+        }
+
+        .diff-card.querya {
+            background: var(--yellow-primary);
+            color: var(--black);
+            border-color: var(--yellow-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .diff-card h4 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .diff-card p {
+            font-size: 1.125rem;
+            line-height: 1.5;
+        }
+
+        .diff-highlight {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--yellow-primary);
+        }
+
+        /* ========== Benefits Section ========== */
+        .benefits h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -1px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            border: var(--border);
+            box-shadow: var(--shadow);
+            padding: 3rem 2.5rem;
+            text-align: center;
+            transition: all 0.15s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--black);
+        }
+
+        .benefit-card h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card .desc {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card p {
+            font-size: 1.125rem;
+            color: var(--gray-dark);
+        }
+
+        /* ========== CTA Section ========== */
+        .cta {
+            background: var(--white);
+            text-align: center;
+        }
+
+        .cta-box {
+            background: var(--yellow-primary);
+            border: var(--border);
+            box-shadow: var(--shadow-lg);
+            padding: 5rem 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cta-box h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .cta-box p {
+            font-size: 1.375rem;
+            margin-bottom: 2.5rem;
+            color: var(--gray-dark);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 4rem 3rem 2rem;
+            border-top: var(--border);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand .logo-icon {
+            background: var(--yellow-primary);
+        }
+
+        .footer-brand .logo-text {
+            color: var(--white);
+        }
+
+        .footer-brand p {
+            font-size: 1rem;
+            color: var(--gray);
+            max-width: 300px;
+            line-height: 1.6;
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.15s;
+        }
+
+        .footer-links a:hover {
+            color: var(--yellow-primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .social-links a {
+            width: 44px;
+            height: 44px;
+            background: var(--yellow-primary);
+            border: var(--border);
+            border-color: var(--yellow-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+
+        .social-links a:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--yellow-primary);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            body { font-size: 16px; }
+            
+            section { padding: 5rem 2rem; }
+            
+            .hero h1 { font-size: 3.5rem; }
+            
+            .mechanism-flow {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .mechanism-plus {
+                margin: 0;
+                text-align: center;
+            }
+            
+            .pain-grid,
+            .steps-grid,
+            .example-cards,
+            .diff-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .domains-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .formula-items {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            
+            .hero { padding-top: 7rem; }
+            .hero h1 { font-size: 2.5rem; letter-spacing: -1px; }
+            .hero-subtitle { font-size: 1.25rem; }
+            
+            .positioning h2,
+            .steps h2,
+            .domains h2,
+            .examples h2,
+            .differentiation h2,
+            .benefits h2,
+            .cta-box h2 {
+                font-size: 2rem;
+            }
+            
+            .domains-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-top {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-brand p { max-width: none; }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="wrap">
-
-    <div class="top">
-      <div class="nav">
-        <div class="brand">
-          <div class="mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M7 7h10v10H7z" stroke="#FFD400" stroke-width="2.4"/>
-              <path d="M10 10h7v7" stroke="#FFD400" stroke-width="2.4"/>
-              <path d="M10 17l7-7" stroke="#FFD400" stroke-width="2.4"/>
-            </svg>
-          </div>
-          <div class="brandText">
-            <b>Querya</b>
-            <span>Daily Question Engine</span>
-          </div>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🧠</div>
+                <span class="logo-text">Querya</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#mechanism">机制</a></li>
+                <li><a href="#steps">流程</a></li>
+                <li><a href="#examples">示例</a></li>
+                <li><a href="#cta">开始</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <div class="links" aria-label="site">
-          <a href="#manifesto">宣言</a>
-          <a href="#difference">为什么不是 Chatbot</a>
-          <a href="#do">它能做什么</a>
-          <a href="#start">三步开始</a>
-          <a href="#legal">Legal</a>
+    <!-- Hero -->
+    <section class="hero">
+        <h1>每天5问。<br><span class="highlight">为你定制。</span></h1>
+        <p class="hero-subtitle">不是泛泛提问。是基于你的档案与今日关注生成。</p>
+        <div class="hero-note">你越用，问题越准。</div>
+        <div class="hero-buttons">
+            <a href="#cta" class="btn btn-primary">创建个人档案</a>
+            <a href="#examples" class="btn btn-secondary">查看示例 →</a>
         </div>
-      </div>
-    </div>
-
-    <!-- HERO / MANIFESTO -->
-    <section id="manifesto">
-      <span class="kicker">QUESTION ENGINE</span>
-      <h1>Querya</h1>
-
-      <p class="lead">你的 Daily Question Engine。</p>
-
-      <div class="stack">
-        <p>不是聊天。</p>
-        <p>不是陪你想。</p>
-        <p>是把关键问题 <b>投递</b> 给你，让你更早看清方向。</p>
-        <p class="muted">答案越来越便宜，稀缺的是“问对”。</p>
-      </div>
-
-      <div class="ctaRow">
-        <a class="btn primary" href="#do">查看它能做什么 →</a>
-        <a class="btn ghost" href="mailto:hello@querya.cn">联系我</a>
-      </div>
-
-      <div class="flow" aria-label="flow">
-        <div class="box">你设定目标</div>
-        <div class="arrow">→</div>
-        <div class="box">Querya 投递问题</div>
-        <div class="arrow">→</div>
-        <div class="box">你更快做对决策</div>
-      </div>
+        <a href="#positioning" class="scroll-indicator">
+            <span>往下探索</span>
+            <div class="scroll-arrow">↓</div>
+        </a>
     </section>
 
-    <div class="hr"></div>
-
-    <!-- WHY NOT CHATBOT -->
-    <section id="difference">
-      <h2>为什么不是 Chatbot？</h2>
-      <p class="sub">你不缺 AI。你缺的是一个能把“思考过程”变成日常机制的系统。 :contentReference[oaicite:1]{index=1}</p>
-
-      <div class="list">
-        <h3>现实是这样</h3>
-        <ul>
-          <li>你开一个对话框，来回 20 轮，越聊越散 <span>（问题本身就很耗）</span></li>
-          <li>最后还是你自己整理、收尾、执行 <span>（AI 只是给建议）</span></li>
-        </ul>
-      </div>
-
-      <div class="list">
-        <h3>Querya 的立场</h3>
-        <ul>
-          <li><b>Querya 不讨论。</b>它把关键问题摆到桌面上。</li>
-          <li>它默认你是老板，你需要的是“问法”，不是“闲聊”。 :contentReference[oaicite:2]{index=2}</li>
-        </ul>
-      </div>
-
-      <div class="compare" aria-label="comparison">
-        <div class="row">
-          <div class="cell head">普通 Chatbot</div>
-          <div class="cell head">Querya</div>
+    <!-- Positioning -->
+    <section class="positioning" id="positioning">
+        <div class="container-narrow">
+            <h2>Querya 是个人化的每日提问引擎。</h2>
+            <div class="positioning-lines">
+                <p>你提供上下文。我们生成训练。</p>
+                <p class="emphasis">让思考有"身份"，也有"当下"。</p>
+            </div>
         </div>
-        <div class="row">
-          <div class="cell">交互：多轮对话</div>
-          <div class="cell">交互：每日投递</div>
-        </div>
-        <div class="row">
-          <div class="cell">输出：建议、答案</div>
-          <div class="cell">输出：问题结构、盲区提醒</div>
-        </div>
-        <div class="row">
-          <div class="cell">节奏：你想起来才用</div>
-          <div class="cell">节奏：每天固定复利</div>
-        </div>
-        <div class="row">
-          <div class="cell muted">你来配合它</div>
-          <div class="cell muted">它来配合你</div>
-        </div>
-      </div>
     </section>
 
-    <div class="hr"></div>
-
-    <!-- WHAT IT DOES -->
-    <section id="do">
-      <h2>Querya 能为你完成</h2>
-      <p class="sub">核心形式是 Daily 6：每天 6 个问题，跨学科分布，固定结构，长期可回看。</p>
-
-      <div class="list">
-        <h3>Daily 6 Topics</h3>
-        <ul>
-          <li>AI / Frontier Tech</li>
-          <li>Business / Strategy</li>
-          <li>Social Skills</li>
-          <li>Liberal Arts</li>
-          <li>Communication</li>
-          <li>Meta-thinking</li>
-        </ul>
-      </div>
-
-      <div class="list">
-        <h3>你会得到什么</h3>
-        <ul>
-          <li>更早暴露盲区 <span>（你没想到要问的那类）</span></li>
-          <li>更稳定的长期对齐 <span>（目标不会“丢”）</span></li>
-          <li>可回看的思考资产 <span>（判断路径可复盘）</span></li>
-        </ul>
-      </div>
-
-      <div class="list">
-        <h3>示例（风格展示）</h3>
-        <ul>
-          <li><span>Business：</span>如果把产品的核心承诺写成一句话，它是效率工具、身份符号还是日常仪式？我怎么验证它？</li>
-          <li><span>Meta：</span>我最近一次重要决策的默认假设是什么？如果反过来成立，我会走哪条完全不同的路？</li>
-          <li><span>Social：</span>我与关键合作者的隐性契约是什么？我是否正在无意破坏它？</li>
-        </ul>
-      </div>
+    <!-- Pain Points -->
+    <section class="pain-points">
+        <div class="container">
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <p class="problem">通用问题。像大锅饭。</p>
+                    <p class="solution">你需要的是私教。</p>
+                </div>
+                <div class="pain-card">
+                    <p class="problem">每天刷同一种内容。</p>
+                    <p class="solution">不是广播播报。</p>
+                </div>
+                <div class="pain-card">
+                    <p class="problem">你变了，问题没变。</p>
+                    <p class="solution">你每天变。你的问题也该变。</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <div class="hr"></div>
-
-    <!-- START -->
-    <section id="start">
-      <h2>三步开始</h2>
-      <p class="sub">越简单越好：打开 App，接收问题，回答/收藏，持续回看。</p>
-
-      <div class="steps">
-        <div class="step">
-          <b>Step</b>
-          <div class="n">1</div>
-          <div>设定你的目标/主题</div>
+    <!-- Mechanism -->
+    <section class="mechanism" id="mechanism">
+        <div class="container">
+            <h2>个性化机制</h2>
+            <div class="mechanism-flow">
+                <div class="mechanism-block">
+                    <h3>固定信息</h3>
+                    <p class="subtitle">个人档案 Profile</p>
+                    <ul>
+                        <li>你的目标</li>
+                        <li>你的角色</li>
+                        <li>你的偏好</li>
+                        <li>你的时间线</li>
+                        <li>你的约束与底线</li>
+                    </ul>
+                </div>
+                <div class="mechanism-plus">+</div>
+                <div class="mechanism-block">
+                    <h3>动态信息</h3>
+                    <p class="subtitle">今日关注 Today Focus</p>
+                    <ul>
+                        <li>你今天在意什么</li>
+                        <li>你今天要解决什么</li>
+                        <li>你今天被什么困住</li>
+                        <li>你今天要做哪个选择</li>
+                    </ul>
+                </div>
+                <div class="mechanism-plus">=</div>
+                <div class="mechanism-block result">
+                    <h3>结果</h3>
+                    <p class="subtitle">你的今日五问 Daily 5</p>
+                    <ul>
+                        <li>同一套结构。不同的人生。</li>
+                        <li>同一个领域。不同的切口。</li>
+                        <li>每天5问。精准落点。</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="step">
-          <b>Step</b>
-          <div class="n">2</div>
-          <div>每天接收 Daily 6</div>
-        </div>
-        <div class="step">
-          <b>Step</b>
-          <div class="n">3</div>
-          <div>回答、收藏、回看轨迹</div>
-        </div>
-      </div>
-
-      <div class="final">
-        <p>你不是缺答案。</p>
-        <p>你是缺一套稳定的“提问系统”。</p>
-        <p><b>Querya 只做一件事：让你持续问对。</b></p>
-      </div>
-
-      <div class="ctaRow">
-        <a class="btn primary" href="mailto:hello@querya.cn">合作 / 投资沟通 →</a>
-        <a class="btn ghost" href="#manifesto">回到顶部</a>
-      </div>
     </section>
 
-    <div class="hr"></div>
-
-    <!-- LEGAL -->
-    <section id="legal">
-      <h2>Legal</h2>
-      <p class="sub">必要页面保持简洁。</p>
-
-      <div class="ctaRow" style="margin-top:14px;">
-        <a class="btn ghost" href="./terms.html">用户条款</a>
-        <a class="btn ghost" href="./privacy.html">隐私政策</a>
-        <a class="btn ghost" href="./ai-disclaimer.html">AI 内容生成声明</a>
-      </div>
+    <!-- Formula -->
+    <section class="formula">
+        <div class="container">
+            <div class="formula-items">
+                <div class="formula-item">
+                    <p class="label">Profile</p>
+                    <p class="value">决定方向</p>
+                </div>
+                <span class="formula-operator">×</span>
+                <div class="formula-item">
+                    <p class="label">Focus</p>
+                    <p class="value">决定切口</p>
+                </div>
+                <span class="formula-operator">=</span>
+                <div class="formula-item">
+                    <p class="label">五问</p>
+                    <p class="value">决定行动</p>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <!-- Steps -->
+    <section class="steps" id="steps">
+        <div class="container">
+            <h2>体验流程</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>建档</h3>
+                    <p>填写你的目标、角色、偏好</p>
+                    <p class="time">一次就够</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>设定今日关注</h3>
+                    <p>告诉我今天在意什么</p>
+                    <p class="time">30 秒</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>收到今日五问</h3>
+                    <p>开始你的思考训练</p>
+                    <p class="time">每日更新</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Domains -->
+    <section class="domains">
+        <div class="container">
+            <h2>五大领域</h2>
+            <p class="domains-subtitle">每天从中抽取，按你定制</p>
+            <div class="domains-grid">
+                <div class="domain-card">
+                    <div class="icon">🔬</div>
+                    <h4>前沿科技</h4>
+                    <p>AI / 神经科学</p>
+                </div>
+                <div class="domain-card">
+                    <div class="icon">💼</div>
+                    <h4>商业策略</h4>
+                    <p>增长 / 模式</p>
+                </div>
+                <div class="domain-card">
+                    <div class="icon">🗣️</div>
+                    <h4>社交表达</h4>
+                    <p>沟通 / 影响力</p>
+                </div>
+                <div class="domain-card">
+                    <div class="icon">📚</div>
+                    <h4>人文博雅</h4>
+                    <p>哲学 / 历史</p>
+                </div>
+                <div class="domain-card">
+                    <div class="icon">🧠</div>
+                    <h4>元思考</h4>
+                    <p>认知 / 决策</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples -->
+    <section class="examples" id="examples">
+        <div class="container">
+            <h2>同题不同人</h2>
+            <p class="examples-subtitle">突出定制的力量</p>
+            
+            <div class="example-group">
+                <div class="example-theme">
+                    <span>主题：选择</span>
+                </div>
+                <div class="example-cards">
+                    <div class="example-card">
+                        <p class="role">对创业者</p>
+                        <p class="question">现金流还是增长？哪个更能让你活到明年？</p>
+                    </div>
+                    <div class="example-card">
+                        <p class="role">对学生</p>
+                        <p class="question">成绩还是作品集？哪个更能证明你的能力？</p>
+                    </div>
+                    <div class="example-card">
+                        <p class="role">对管理者</p>
+                        <p class="question">授权还是控制？哪个更能让团队成长？</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-group">
+                <div class="example-theme">
+                    <span>主题：焦虑</span>
+                </div>
+                <div class="example-cards">
+                    <div class="example-card">
+                        <p class="role">对决策者</p>
+                        <p class="question">你的焦虑是风险信号，还是身份债？</p>
+                    </div>
+                    <div class="example-card">
+                        <p class="role">对完美主义者</p>
+                        <p class="question">你在担心"失败"，还是"被看见的失败"？</p>
+                    </div>
+                    <div class="example-card">
+                        <p class="role">对职场人</p>
+                        <p class="question">你焦虑的是能力不够，还是时间不够？</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiation -->
+    <section class="differentiation">
+        <div class="container">
+            <h2>Querya 的不同</h2>
+            <div class="diff-grid">
+                <div class="diff-card other">
+                    <h4>Chat</h4>
+                    <p>给回答。很快。也很泛。</p>
+                </div>
+                <div class="diff-card other">
+                    <h4>To-do</h4>
+                    <p>管任务。很清楚。也很盲。</p>
+                </div>
+                <div class="diff-card querya">
+                    <h4>Querya</h4>
+                    <p>先要你的上下文。再给你的问题。</p>
+                </div>
+            </div>
+            <p class="diff-highlight">不是生成内容。是生成针对性。</p>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits">
+        <div class="container">
+            <h2>你会得到什么</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>更准</h3>
+                    <p class="desc">问题贴着你的现实走</p>
+                    <p>不是通用问题，是你的问题</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>更稳</h3>
+                    <p class="desc">每天5问，持续训练</p>
+                    <p>思考是肌肉，需要每天练</p>
+                </div>
+                <div class="benefit-card">
+                    <h3>更可复利</h3>
+                    <p class="desc">档案越完整，收益越高</p>
+                    <p>你越用，问题越精准</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2>先建档。再开始。</h2>
+                <p>让问题认识你。</p>
+                <div class="cta-buttons">
+                    <a href="https://apps.apple.com/app/querya" class="btn btn-primary" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        创建个人档案
+                    </a>
+                    <a href="#examples" class="btn btn-secondary">获取今日五问 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-      <div>© <span id="y"></span> Querya. All rights reserved.</div>
-      <div class="footlinks">
-        <a href="mailto:hello@querya.cn">hello@querya.cn</a>
-        <a href="#manifesto">宣言</a>
-        <a href="#start">三步开始</a>
-      </div>
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">🧠</div>
+                        <span class="logo-text">Querya</span>
+                    </a>
+                    <p>个人化的每日提问引擎。你提供上下文，我们生成训练。让思考有身份，也有当下。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>产品</h4>
+                    <ul>
+                        <li><a href="#mechanism">个性化机制</a></li>
+                        <li><a href="#steps">体验流程</a></li>
+                        <li><a href="#examples">问题示例</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>法律条款</h4>
+                    <ul>
+                        <li><a href="terms.html">用户条款</a></li>
+                        <li><a href="privacy.html">隐私协议</a></li>
+                        <li><a href="ai-disclaimer.html">AI 使用声明</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>支持</h4>
+                    <ul>
+                        <li><a href="support.html">帮助中心</a></li>
+                        <li><a href="mailto:support@querya.app">联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Querya. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="https://twitter.com/querya_app" target="_blank" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://github.com/querya" target="_blank" aria-label="GitHub">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
     </footer>
 
-  </div>
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
+        // Hide scroll indicator on scroll
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                scrollIndicator.style.opacity = '0';
+                scrollIndicator.style.pointerEvents = 'none';
+            } else {
+                scrollIndicator.style.opacity = '1';
+                scrollIndicator.style.pointerEvents = 'auto';
+            }
+        });
+    </script>
 </body>
 </html>
